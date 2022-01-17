@@ -23,7 +23,7 @@ namespace GSM.Service.ViewModel
         public bool? IsActive { get; set; }
 
         [Display(Name = "Registration")]
-        [DisplayFormat(DataFormatString = "{0:d MMMM , yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime CreatedDate { get; set; }
     }
 }

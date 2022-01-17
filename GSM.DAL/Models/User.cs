@@ -26,8 +26,9 @@ namespace GSM.DAL.Models
         public int? Role { get; set; }
         public bool? IsActive { get; set; }
         [Display(Name = "Created Date")]
-        [DisplayFormat(DataFormatString = "{0:dddd, d MMMM , yyyy}")]
-        public DateTime? CreatedDate { get; set; }        
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime? CreatedDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? UpdateDate { get; set; }       
         public string CreatedBy { get; set; }      
         public string UpdatedBy { get; set; }
