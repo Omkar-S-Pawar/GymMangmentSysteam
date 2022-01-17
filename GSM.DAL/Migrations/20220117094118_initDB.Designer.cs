@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GSM.DAL.Migrations
 {
     [DbContext(typeof(GMSContext))]
-    [Migration("20220116101106_InitDB")]
-    partial class InitDB
+    [Migration("20220117094118_initDB")]
+    partial class initDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
