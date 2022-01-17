@@ -1,0 +1,80 @@
+﻿@model GSM.DAL.Models.User
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Create User</h4>
+<hr />
+<form asp-action="Create">
+    <div class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label asp-for="Password" class="control-label"></label>
+            <input type="password" asp-for="Password" class="form-control" required />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="Phone" class="control-label"></label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label asp-for="Age" class="control-label"></label>
+            <input asp-for="Age" class="form-control" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="Gender" class="control-label"></label>  <br />
+            @Html.RadioButton("Gender", "1")  Male &nbsp;&nbsp;
+            @Html.RadioButton("Gender", "2")  Female &nbsp;&nbsp;
+            @Html.RadioButton("Gender", "3")  Other
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label asp-for="Traniner" class="control-label"></label>
+            @Html.DropDownListFor(Model => Model.TrainnerId, new SelectList(ViewBag.TraninersList, "Id", "Name"),
+            "Select Traniner", new { id = "ddlTraniners", @class="form-control"})
+            <span asp-validation-for="TrainnerId" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="Plan" class="control-label"></label>
+            @Html.DropDownListFor(Model => Model.PlanId, new SelectList(ViewBag.PlanList, "Id", "Name"),
+            "Select Plan", new { id = "ddlPlan", @class="form-control"})
+            <span asp-validation-for="PlanId" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <br />
+            <br />
+            @Html.CheckBox("isActive", true)    <label asp-for="IsActive" class="control-label"></label>
+        </div>
+    </div>
+    <div class="text-center pt-3">
+        <input type="submit" value="Create" class="btn btn-primary" />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a asp-action="Index">Back to List</a>
+    </div>
+</form>
+
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

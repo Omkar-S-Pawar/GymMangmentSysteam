@@ -1,0 +1,153 @@
+﻿@model IEnumerable<GSM.Service.ViewModel.vwUserInfo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <div class="row">
+        <div class="col-md-10">
+            @using (@Html.BeginForm())
+            {
+                <label>Enter Name or Phone No</label>
+                <input id="Search" name="Search" type="text" />
+                <input type="submit" class="btn btn-primary" value="search" />
+            }
+        </div>
+        <div class="col-2">
+            <a onclick="CreatePDFfromHTML()" class="btn btn-outline-primary"><i class="fas fa-file-pdf"></i> </a>
+            <a onclick="PrintElem('#divprint')" class="btn btn-outline-primary"><i class="fas fa-print"></i> </a>
+
+        </div>
+    </div>
+</p>
+
+<table id="print" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlanName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainnerName)
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.CreatedDate)  <i class="fas fa-arrows-alt-v"></i></a>
+            </th>
+            <th>
+                <a asp-action="Create" class="btn btn-outline-primary"><i class="far fa-plus-square"></i>  Create New</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="4"> Records not found </td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @if (item.Gender == 1)
+                            {
+                                <label>Male</label>
+                            }
+                            else if (item.Gender == 2)
+                            {
+                                <label>Female</label>
+                            }
+                            else
+                            {
+                                <label>Other</label>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Age)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PlanName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TrainnerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                        </td>
+                        <td>
+                            <a asp-action="Update" asp-route-id="@item.Id"><i class="fas fa-edit">&nbsp;&nbsp;</i></a> |&nbsp;&nbsp;
+                            <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;</a> |&nbsp;&nbsp;
+                            <a href="@Url.Action("Delete", new { id = item.Id })" style="color :red;" onclick="return confirm ('Are you sure want to delete ?');">
+                                <i class="far fa-trash-alt">&nbsp;&nbsp;</i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+
+    </tbody>
+</table>
+
+<script>
+        function PrintElem()
+        {
+               $("#print").printThis({
+                    header: "<h1>User List</h1>",
+                    importCSS: true
+               })
+        }
+
+        function CreatePDFfromHTML() {
+        var HTML_Width = $("#print").width();
+        var HTML_Height = $("#print").height();
+        var top_left_margin = 15;
+        var PDF_Width = HTML_Width + (top_left_margin * 2);
+        var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+        var canvas_image_width = HTML_Width;
+        var canvas_image_height = HTML_Height;
+
+        var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+        html2canvas($("#print")[0]).then(function (canvas) {
+            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+            var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+            for (var i = 1; i <= totalPDFPages; i++) {
+                pdf.addPage(PDF_Width, PDF_Height);
+                pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+            }
+            pdf.save("UserLists.pdf");
+        });
+    }
+</script>

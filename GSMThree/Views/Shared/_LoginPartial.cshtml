@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-light box-shadow mb-3">
+    <div class="container">
+        <a class="navbar-brand text-dark"  asp-controller="User" asp-action="Index" >GMS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        @if (SignInManager.IsSignedIn(User))
+        { 
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="User" asp-action="Index" >Dashbroad</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Master</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item text-dark" asp-controller="Plan" asp-action="Index">Plan</a>
+                        <a class="dropdown-item text-dark" asp-controller="Traniner" asp-action="Index">Traniner</a>
+                        <a class="dropdown-item text-dark" asp-controller="Workout" asp-action="Index">Workout</a>
+                        <a class="dropdown-item text-dark" asp-controller="User" asp-action="Index">User</a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a id="manage" href="#" class="nav-link text-dark" title="Manage">Hello @User.Identity.Name !</a>
+                </li>
+                <li class="nav-item">
+                    <form id="logoutForm" class="form-inline" asp-action="Logout" asp-controller="Account" asp-route-returnUrl="@Url.Action("Index", "User", new { area = "" })">
+                        <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        }
+        else
+        {
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-action="Signup" asp-controller="Account">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-action="Login" asp-controller="Account">Login</a>
+                </li>
+            </ul>
+        }
+    </div>
+</nav>

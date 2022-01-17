@@ -1,0 +1,37 @@
+﻿@using GSM.Service.ViewModel;
+@{
+    ViewBag.Title = "WorkoutDay";
+    int id = 1;
+}
+<h4>Select Day</h4>
+<hr />
+@using (@Html.BeginForm("Create", "Workout", FormMethod.Post))
+{
+    <div class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col">
+            @foreach (var employee in (IEnumerable<vwWorkout>)TempData["Data"])
+            {
+                <div class="col pt-3">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="@("chk" + id)" value="@id" />
+                        <label class="form-check-label" for="@("chk" + id)"> @employee.Name</label>
+                    </div>
+                </div>
+                id++;
+            }
+        </div>
+        <div class="col">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

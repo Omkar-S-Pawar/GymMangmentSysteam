@@ -1,0 +1,51 @@
+﻿@model IEnumerable<GSM.Service.ViewModel.vwPlan>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+                @foreach (var item in Model)
+   
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        <a asp-action="Update" asp-route-id="@item.Id"><i class="fas fa-edit">Edit</i></a> |
+                                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i>Details</a> |
+                                    <a href="@Url.Action("Delete", new { id = item.Id })" style="color :red;" onclick="return confirm ('Are you sure want to delete ?');">
+                                                <i class="far fa-trash-alt"> Delete</i>
+                                            </a>
+                    </td>
+                </tr>
+                }
+    </tbody>
+</table>

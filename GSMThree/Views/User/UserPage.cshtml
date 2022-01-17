@@ -1,0 +1,72 @@
+﻿@model GSM.Service.ViewModel.vwUserInfo
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h4>Details</h4>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+     <dl class="row">
+        <dt class = "col">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+     </dl>
+     <dl class="row">
+        <dt class = "col">
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd class = "col">
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+     </dl>
+     <dl class="row">
+         <dt class = "col">
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+        <dd class = "col">
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+     </dl>
+     <dl class="row">
+         <dt class = "col">
+            @Html.DisplayNameFor(model => model.PlanName)
+        </dt>
+        <dd class = "col">
+            @Html.DisplayFor(model => model.PlanName)
+        </dd>
+     </dl>
+     <dl class="row">
+         <dt class = "col">
+            @Html.DisplayNameFor(model => model.TrainnerName)
+        </dt>
+        <dd class = "col">
+            @Html.DisplayFor(model => model.TrainnerName)
+        </dd>
+     </dl>
+     <dl class="row">
+        <dt class = "col">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class = "col">
+            <label asp-for="CreatedDate" class="col-md-4 control-label">@Html.DisplayFor(model=> model.CreatedDate)</label>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Update" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
