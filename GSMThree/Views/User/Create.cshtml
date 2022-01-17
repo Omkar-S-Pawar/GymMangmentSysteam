@@ -1,6 +1,27 @@
 ﻿@model GSM.DAL.Models.User
-
 @{
+    ViewBag.Title = "Validate Or Select Radio Button List In Asp.Net MVC Using JavaScript";
+    <script>
+            function ValidateRadioButton() {
+                var rbtDetail = document.getElementsByName("Gender");
+                var isValid = false;
+                for (var i = 0; i < rbtDetail.length; i++) {
+                    if (rbtDetail[i].checked) {
+                        isValid = true;
+                        break;
+                    }
+                }
+                if (isValid == false) {
+                     alert("Error : Pleae select Gender option");
+                      return false;
+                }
+                else {
+
+                     return true;
+                }
+            }
+    </script>
+
     ViewData["Title"] = "Create";
 }
 
@@ -54,9 +75,9 @@
             <span asp-validation-for="TrainnerId" class="text-danger"></span>
         </div>
         <div class="col-md-3">
-            <label asp-for="Plan" class="control-label"></label>
+            <label asp-for="PlanId" class="control-label"></label>
             @Html.DropDownListFor(Model => Model.PlanId, new SelectList(ViewBag.PlanList, "Id", "Name"),
-            "Select Plan", new { id = "ddlPlan", @class="form-control"})
+            "Select Subcription", new { id = "ddlPlan", @class="form-control"})
             <span asp-validation-for="PlanId" class="text-danger"></span>
         </div>
         <div class="col">
@@ -66,7 +87,7 @@
         </div>
     </div>
     <div class="text-center pt-3">
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <input type="submit" value="Create" class="btn btn-primary" onclick="javascript: return ValidateRadioButton();" />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a asp-action="Index">Back to List</a>
     </div>

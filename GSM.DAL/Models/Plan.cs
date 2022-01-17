@@ -14,6 +14,7 @@ namespace GSM.DAL.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Subcription")]
         public string Name { get; set; }
         [Required]
         public bool IsActive { get; set; }
