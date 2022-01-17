@@ -37,6 +37,7 @@ namespace GSMThree
             services.AddTransient<ITraniner, TraninerService>();
             services.AddTransient<IPlanService, PlanService>();
             services.AddTransient<IWorkoutService, WorkoutService>();
+            services.AddTransient<IReportService, ReportService>();
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.Configure<IdentityOptions>(options =>

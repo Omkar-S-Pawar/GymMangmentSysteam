@@ -1,103 +1,105 @@
-﻿
+﻿@using System.Collections
+@model List<int>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 
-    <div class="pagetitle">
-      <h1>Dashboard</h1>
-      <nav>
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
         </ol>
-      </nav>
-    </div><!-- End Page Title -->
+    </nav>
+</div><!-- End Page Title -->
 
-    <section class="section dashboard">
-      <div class="row">
+<section class="section dashboard">
+    <div class="row">
 
         <!-- Left side columns -->
         <div class="col-md-12">
-          <div class="row">
-            <!-- User Card -->
-            <div class="col">
-              <div class="card info-card sales-card">
+            <div class="row">
+                <!-- User Card -->
+                <div class="col">
+                    <div class="card info-card sales-card">
 
-                <div class="card-body">
-                  <h5 class="card-title">User <span>| Total</span></h5>
+                        <div class="card-body">
+                            <h5 class="card-title">Total Members </h5>
 
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <i class="bi bi-people"></i>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>
+                                        @Model.ElementAt(0)
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="ps-3">
-                      <h6>145</h6>
+                </div><!-- End User Card -->
+                <!-- User Today -->
+                <div class="col">
+                    <div class="card info-card  revenue-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Today Subscribers</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-calendar2-check"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@Model.ElementAt(1)</h6>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-
-              </div>
-            </div><!-- End User Card -->
-
-            <!-- User Today -->
-            <div class="col">
-              <div class="card info-card  revenue-card">
-                <div class="card-body">
-                  <h5 class="card-title">User <span>| Today Subscription</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-calendar2-check"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>1244</h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
                 <!-- End User Today -->
                 <!-- User Expire -->
-            <div class="col">
-              <div class="card info-card customers-card">
-                <div class="card-body">
-                  <h5 class="card-title">User <span>|Today Subscription Ended</span></h5>
+                <div class="col">
+                    <div class="card info-card customers-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Today Subscription End</h5>
 
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-calendar-x"></i>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-calendar-x"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@Model.ElementAt(2)</h6>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="ps-3">
-                      <h6>1244</h6>
-                    </div>
-                  </div>
                 </div>
-              </div>
-            </div>
-            <!-- Traniner Card -->
-            <div class="col">
-              <div class="card info-card sales-card">
+                <!-- Traniner Card -->
+                <div class="col">
+                    <div class="card info-card sales-card">
 
-                <div class="card-body">
-                  <h5 class="card-title">Traniner <span>| Total</span></h5>
+                        <div class="card-body">
+                            <h5 class="card-title"> Total Traniner</h5>
 
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                     <i class="bi bi-people-fill"></i>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-person-circle"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@Model.ElementAt(3) </h6>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="ps-3">
-                      <h6>10</h6>
-                    </div>
-                  </div>
                 </div>
 
-              </div>
+
             </div>
-
-
-          </div>
-        </div><!-- End Left side columns -->      
-        </div>
-    </section>
+        </div><!-- End Left side columns -->
+    </div>
+</section>

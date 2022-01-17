@@ -1,6 +1,8 @@
 ﻿using GSM.DAL.Data;
 using GSM.Service.ViewModel;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +12,7 @@ namespace GSM.Service.Services
 {
     public interface IReportService : IDisposable
     {
-        List<vwUserInfo> vwUserInfos();
+        List<int> AdminDashboradCount();
     }
     public class ReportService : IReportService
     {
@@ -20,15 +22,22 @@ namespace GSM.Service.Services
         {
             _context = context;
         }
-
-        public List<vwUserInfo> vwUserInfos()
+        public List<int> AdminDashboradCount()
         {
-            return _context.Set<vwUserInfo>().ToList();
+            var arlist1 = new List<int>
+            {
+                _context.MstUser.Where(x=>x.IsActive==true).Count(),
+                _context.MstUser.Where(x => x.CreatedDate.Equals(DateTime.Now)).Count(),
+                _context.MstUser.Where(x => x.CreatedDate <= DateTime.Now).Count(),
+                _context.MstTrainner.Count()
+            };
+            return arlist1;
         }
         public void Dispose()
         {
             _context.Dispose();
             GC.SuppressFinalize(this);
         }
+
     }
 }

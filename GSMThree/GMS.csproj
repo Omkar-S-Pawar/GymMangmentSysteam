@@ -5,9 +5,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Content\**" />
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="Areas\Admin\Models\**" />
+    <Compile Remove="Areas\Identity\**" />
     <Compile Remove="wwwroot\Admin\**" />
+    <Content Remove="Areas\Admin\Content\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\Admin\Models\**" />
+    <Content Remove="Areas\Identity\**" />
     <Content Remove="wwwroot\Admin\**" />
+    <EmbeddedResource Remove="Areas\Admin\Content\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\**" />
+    <EmbeddedResource Remove="Areas\Identity\**" />
     <EmbeddedResource Remove="wwwroot\Admin\**" />
+    <None Remove="Areas\Admin\Content\**" />
+    <None Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\Admin\Models\**" />
+    <None Remove="Areas\Identity\**" />
     <None Remove="wwwroot\Admin\**" />
   </ItemGroup>
 
@@ -25,14 +41,6 @@
   <ItemGroup>
     <ProjectReference Include="..\GSM.DAL\GSM.DAL.csproj" />
     <ProjectReference Include="..\GSM.Service\GSM.Service.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Content\" />
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Identity\Data\" />
-    <Folder Include="Areas\Identity\Pages\Account\" />
   </ItemGroup>
 
 </Project>

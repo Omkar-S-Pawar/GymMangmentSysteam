@@ -19,7 +19,7 @@ namespace GMS.Controllers
 
         public IActionResult GetUserCount()
         {
-           List<vwUserInfo> vwUser= _reportService.vwUserInfos();
+        
             return View();
         }
 
