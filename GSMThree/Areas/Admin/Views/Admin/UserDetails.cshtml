@@ -1,4 +1,4 @@
-﻿@model List<GSM.Service.ViewModel.vwUserInfo>
+﻿@model IEnumerable<GSM.Service.ViewModel.vwUserInfo>
 @{
     ViewData["Title"] = "UserDetails";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -58,9 +58,8 @@
                     </div>
 
                     <div class="col-md-3">
-                         <select name="products" class="form-control" asp-items="@ViewBag.TraninersList"></select>
-                       @* @Html.DropDownListFor(Model => Model.TrainnerId, new SelectList(ViewBag.TraninersList, "Id", "Name"),
-                        "Select Traniner", new { id = "ddlTraniners", @class="form-select"})*@
+                        @*@Html.DropDownListFor(Model => Model.TrainnerId, new SelectList(ViewBag.TraninersList, "Id", "Name"),
+                            "Select Traniner", new { id = "ddlTraniners", @class="form-select"})*@
                     </div>
 
 
@@ -80,24 +79,53 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col">Subcription</th>
-                            <th scope="col">Trainner</th>
+                            <th scope="col">@Html.DisplayNameFor(model => model.Name)</th>
+                            <th scope="col">@Html.DisplayNameFor(model => model.Email)</th>
+                            <th scope="col">@Html.DisplayNameFor(model => model.Phone)</th>
+                            <th scope="col">@Html.DisplayNameFor(model => model.Gender)</th>
+                            <th scope="col">@Html.DisplayNameFor(model => model.TrainnerName)</th>
+                            <th scope="col">@Html.DisplayNameFor(model => model.CreatedDate)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Brandon Jacob</td>
-                            <td>opawar88@gmail.com</td>
-                            <td>8975008405</td>
-                            <td>Male</td>
-                            <td>2022-01-15</td>
-                            <td>Yas Patil</td>
-                        </tr>
+                        @{
+                            if (Model.Count() == 0)
+                            {
+                                <tr class="text-center">
+                                    <td colspan="7"> Records not found </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                int no = 1;
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <th scope="row">@no</th>
+                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                                        <td>
+                                            @if (item.Gender == 1)
+                                            {
+                                                <label>Male</label>
+                                            }
+                                            else if (item.Gender == 2)
+                                            {
+                                                <label>Female</label>
+                                            }
+                                            else
+                                            {
+                                                <label>Other</label>
+                                            }
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.TrainnerName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                                    </tr>
+                                    no++;
+                                }
+                            }
+                        }
                     </tbody>
                 </table>
                 <!-- End Table with stripped rows -->
