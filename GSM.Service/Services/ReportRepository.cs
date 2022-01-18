@@ -13,6 +13,8 @@ namespace GSM.Service.Services
     public interface IReportService : IDisposable
     {
         List<int> AdminDashboradCount();
+
+       // List<string> AutoCompleteUser(string text);
     }
     public class ReportService : IReportService
     {
@@ -36,15 +38,15 @@ namespace GSM.Service.Services
 
         public IEnumerable<vwReport> UserDetail()
         {
-            var data = from u in _context.MstUser                    
+            var data = from u in _context.MstUser
                        select new vwReport
                        {
-                         // User=u
+                           // User=u
                        };
 
             return data.ToList();
         }
-
+       
         public void Dispose()
         {
             _context.Dispose();

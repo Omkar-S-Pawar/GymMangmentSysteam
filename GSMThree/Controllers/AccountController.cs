@@ -61,7 +61,7 @@ namespace GMS.Controllers
             {
                 if (userModel.Email=="osp@gmail.com")
                 {
-                    return Redirect("~/Admin/Admin/Index");
+                    return RedirectToAction("Index","Admin",new {Areas="Admin"});
                 }
                 else
                 {
