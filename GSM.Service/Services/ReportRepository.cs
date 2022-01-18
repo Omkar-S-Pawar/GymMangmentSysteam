@@ -33,6 +33,18 @@ namespace GSM.Service.Services
             };
             return arlist1;
         }
+
+        public IEnumerable<vwReport> UserDetail()
+        {
+            var data = from u in _context.MstUser                    
+                       select new vwReport
+                       {
+                          User=u
+                       };
+
+            return data.ToList();
+        }
+
         public void Dispose()
         {
             _context.Dispose();

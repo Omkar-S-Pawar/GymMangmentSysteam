@@ -1,0 +1,114 @@
+﻿@model List<GSM.Service.ViewModel.vwUserInfo>
+@{
+    ViewData["Title"] = "UserDetails";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>User Report</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Admin" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item active">User Report</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section contact">
+    <div class="col-xl-12">
+        <div class="card p-4">
+            <form class="php-email-form">
+                <div class="row gy-4">
+
+                    <div class="col-md-3 ">
+                        <label class="col-form-label"> Enter User Name </label>
+                        <input type="text" name="name" class="form-control" placeholder="Enter User Name">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="col-form-label"> Enter User Email </label>
+                        <input type="email" class="form-control" name="email" placeholder="Enter User Email">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="col-form-label"> Subcription Start Date </label>
+                        <input type="date" class="form-control" name="SubcriptionStart">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="col-form-label"> Subcription End Date </label>
+                        <input type="date" class="form-control" name="SubcriptionEnd">
+                    </div>
+
+                    <div class="col-md-3">
+                        <select class="form-select btn-block" aria-label="Select Gender">
+                            <option selected>Select Gender</option>
+                            <option value="1">Male</option>
+                            <option value="2">Female</option>
+                            <option value="3">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <select class="form-select" aria-label="Select InActive">
+                            <option selected>Select Active/InActive</option>
+                            <option value="1">Active</option>
+                            <option value="2">InActive</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                         <select name="products" class="form-control" asp-items="@ViewBag.TraninersList"></select>
+                       @* @Html.DropDownListFor(Model => Model.TrainnerId, new SelectList(ViewBag.TraninersList, "Id", "Name"),
+                        "Select Traniner", new { id = "ddlTraniners", @class="form-select"})*@
+                    </div>
+
+
+                    <div class="col-md-3 text-center">
+                        <input type="submit" class="btn btn-primary" value="Search"> &nbsp;&nbsp;
+                        <input type="reset" class="btn btn-secondary" value="Reset">
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+        <div class="card p-4">
+            <div class="row gy-4">
+                <!-- Table with stripped rows -->
+                <table id="example" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Gender</th>
+                            <th scope="col">Subcription</th>
+                            <th scope="col">Trainner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Brandon Jacob</td>
+                            <td>opawar88@gmail.com</td>
+                            <td>8975008405</td>
+                            <td>Male</td>
+                            <td>2022-01-15</td>
+                            <td>Yas Patil</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- End Table with stripped rows -->
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable( {
+            "order": [[ 3, "desc" ]]
+        } );
+    } );
+</script>

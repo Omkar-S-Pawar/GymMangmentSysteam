@@ -57,7 +57,6 @@ namespace GSMThree.Controllers
             List<vwPlan> vwPlan = _userService.GetddlPlan().ToList();
             ViewBag.TraninersList = vwTraniners;
             ViewBag.PlanList = vwPlan;
-
             return View();
         }
 

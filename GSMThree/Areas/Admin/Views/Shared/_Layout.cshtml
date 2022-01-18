@@ -36,7 +36,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a  asp-area="Admin" asp-controller="Admin" asp-action="Index" class="logo d-flex align-items-center">
         <img src="~/assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">GSM</span>
       </a>
@@ -63,7 +63,7 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="~/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"> @User.Identity.Name </span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -105,7 +105,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" asp-action="Logout" asp-controller="Account" asp-route-returnUrl="@Url.Action("Index", "User", new { area = "" })" >
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -125,7 +125,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link" asp-area="Admin" asp-controller="Admin" asp-action="Index" >
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -152,7 +152,7 @@
             </a>
           </li>
           <li>
-            <a href="components-breadcrumbs.html">
+            <a href="#" >
               <i class="bi bi-circle"></i><span>User</span>
             </a>
           </li>
@@ -175,7 +175,7 @@
             </a>
           </li>
           <li>
-            <a href="forms-editors.html">
+            <a asp-area="Admin" asp-controller="Admin" asp-action="UserDetails">
               <i class="bi bi-circle"></i><span>User</span>
             </a>
           </li>

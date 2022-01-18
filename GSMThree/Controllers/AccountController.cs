@@ -59,9 +59,9 @@ namespace GMS.Controllers
 
             if (result.Succeeded)
             {
-                if (User.IsInRole("Admin"))
+                if (userModel.Email=="osp@gmail.com")
                 {
-                    return Redirect("~/User/Index");
+                    return Redirect("~/Admin/Admin/Index");
                 }
                 else
                 {

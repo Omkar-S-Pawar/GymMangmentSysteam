@@ -84,15 +84,9 @@ namespace GSMThree
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapAreaControllerRoute(
-                name: "Admin",
-                areaName: "Admin",
-                pattern: "Admin/{controller=Admin}/{action=Index}"
-            );
-
-                endpoints.MapControllerRoute(
+                 endpoints.MapControllerRoute(
                     name: "areaRoute",
-                    pattern: "{area:exists}/{controller}/{action}"
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
                 endpoints.MapControllerRoute(
                     name: "default",
