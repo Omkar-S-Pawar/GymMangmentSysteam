@@ -36,7 +36,6 @@ namespace GMS.Areas.Admin.Controllers
         public IActionResult UserDetails()
         {
             List<vwUserInfo> result = _userService.GetUserInfoAll().ToList();
-            
             return View(result);
         }
     }

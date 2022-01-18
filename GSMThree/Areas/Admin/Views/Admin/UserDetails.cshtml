@@ -58,8 +58,7 @@
                     </div>
 
                     <div class="col-md-3">
-                        @*@Html.DropDownListFor(Model => Model.TrainnerId, new SelectList(ViewBag.TraninersList, "Id", "Name"),
-                            "Select Traniner", new { id = "ddlTraniners", @class="form-select"})*@
+                        @Html.DropDownList("TraninerId", new SelectList(Model.Select(k => k.Name),Model.Select(k => k.TrainnerId)), "Select Traniner", new { id = "ddlTraniners", @class="form-select"})
                     </div>
 
 

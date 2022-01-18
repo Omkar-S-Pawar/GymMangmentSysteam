@@ -39,7 +39,7 @@ namespace GSM.Service.Services
             var data = from u in _context.MstUser                    
                        select new vwReport
                        {
-                          User=u
+                         // User=u
                        };
 
             return data.ToList();

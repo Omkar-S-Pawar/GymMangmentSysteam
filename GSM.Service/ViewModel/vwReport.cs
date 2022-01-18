@@ -9,8 +9,7 @@ namespace GSM.Service.ViewModel
 {
     public class vwReport
     {
-        public User User { get; set; }
-        public Traniner Traniner { get; set; }
-        public  Plan Plan { get; set; }
+        public List<vwUserInfo> ViewModelUsers { get; set; }
+        public List<vwTraninerInfo> ViewModelTraniners { get; set; }
     }
 }

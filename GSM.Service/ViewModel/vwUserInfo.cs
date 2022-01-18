@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GSM.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -25,5 +26,8 @@ namespace GSM.Service.ViewModel
         [Display(Name = "Registration")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime CreatedDate { get; set; }
+        public virtual Traniner Traniner {get;set;}
+
+        public IList<User> Users { get; set; }
     }
 }
