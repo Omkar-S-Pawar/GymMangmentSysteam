@@ -17,14 +17,12 @@ namespace GMS.Areas.Admin.Controllers
         private readonly ITraniner _traniner;
         private readonly IReportService _reportService;
         private readonly IUserService _userService;
-        private readonly GMSContext _GMSContext;
-
-        public AdminController(IReportService reportService, ITraniner traniner, IUserService userService, GMSContext GMSContext)
+     
+        public AdminController(IReportService reportService, ITraniner traniner, IUserService userService)
         {
             _reportService = reportService;
             _traniner = traniner;
             _userService = userService;
-            _GMSContext = GMSContext;
         }
 
         [HttpGet]
@@ -37,7 +35,7 @@ namespace GMS.Areas.Admin.Controllers
         [Route("UserDetails")]
         public IActionResult UserDetails(string name,string email,string txtFromDate, string txttoDate,int Gender,int IsActive,int ddlTraniners)
         {
-            List<vwUserInfo> result = _userService.GetUserInfoAll().ToList();
+            List<vwUserInfo> result = _userService.GetUserForAdminReport(name,email,txtFromDate,txttoDate,Gender,IsActive,ddlTraniners).ToList();
 
             if(name!=null)
             {

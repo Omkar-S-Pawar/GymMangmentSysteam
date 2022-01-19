@@ -10,6 +10,7 @@ namespace GSM.Service.Services
     public interface IUserService : IDisposable
     {
         public IEnumerable<vwUserInfo> GetUserInfoAll();
+        public IEnumerable<vwUserInfo> GetUserForAdminReport(string name, string email, string txtFromDate, string txttoDate, int Gender, int IsActive, int ddlTraniners);
         public IEnumerable<vwUserInfo> GetUserById(int id);
         public vwUserInfo GetById(int id);
         public vwUserInfo GetByUserName(string email);
@@ -87,8 +88,7 @@ namespace GSM.Service.Services
                 Gender = s.Gender,
                 Age = s.Age,
                 TrainnerName = s.Traniner.Name,
-                PlanName = s.Plan.Name,
-               
+                PlanName = s.Plan.Name,               
                 IsActive = s.IsActive
             }).FirstOrDefault(x => x.Email == email);
         }
@@ -117,7 +117,7 @@ namespace GSM.Service.Services
                 Phone = s.Phone,
                 Gender = s.Gender,
                 Age = s.Age,
-                TrainnerName = _context.MstTrainner.Where(x => x.Id == s.TrainnerId).FirstOrDefault().Name,
+                TrainnerName =s.Traniner.Name,
                 IsActive = s.IsActive
             });
         }
@@ -137,11 +137,42 @@ namespace GSM.Service.Services
                 Name = s.Name
             });
         }
+        public IEnumerable<vwUserInfo> GetUserForAdminReport(string name, string email, string txtFromDate, string txttoDate, int Gender, int IsActive, int ddlTraniners)
+        {
+            List<vwUserInfo> result = GetUserInfoAll().ToList();
+
+            if (name != null)
+            {
+                result = result.Where(s => s.Name.ToLower().Contains(name.ToLower())).ToList();
+            }
+            if (email != null)
+            {
+                result = result.Where(s => s.Email.Contains(email)).ToList();
+            }
+            if (txtFromDate != null && txttoDate != null)
+            {
+                result = result.Where(s => s.CreatedDate >= Convert.ToDateTime(txtFromDate) && s.CreatedDate <= Convert.ToDateTime(txttoDate)).ToList();
+            }
+            if (Gender != 0)
+            {
+                result = result.Where(s => s.Gender.Equals(Gender)).ToList();
+            }
+            if (IsActive != 0)
+            {
+                result = result.Where(s => s.Gender.Equals(IsActive)).ToList();
+            }
+            if (ddlTraniners != 0)
+            {
+                result = result.Where(s => s.Gender.Equals(ddlTraniners)).ToList();
+            }
+            return result;
+        }
 
         public void Dispose()
         {
             _context.Dispose();
             GC.SuppressFinalize(this);
         }
+
     }
 }

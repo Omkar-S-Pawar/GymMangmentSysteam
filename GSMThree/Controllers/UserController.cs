@@ -54,9 +54,11 @@ namespace GSMThree.Controllers
         public IActionResult Create()
         {
             List<vwTraninerInfo> vwTraniners = _userService.GetddlTraniner().ToList();
-            List<vwPlan> vwPlan = _userService.GetddlPlan().ToList();
             ViewBag.TraninersList = vwTraniners;
+           
+            List<vwPlan> vwPlan = _userService.GetddlPlan().ToList();
             ViewBag.PlanList = vwPlan;
+            
             return View();
         }
 
