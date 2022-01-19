@@ -86,8 +86,9 @@ namespace GSM.Service.Services
                 Phone = s.Phone,
                 Gender = s.Gender,
                 Age = s.Age,
-                TrainnerName =s.Traniner.Name,
-                PlanName=s.Plan.Name,
+                TrainnerName = s.Traniner.Name,
+                PlanName = s.Plan.Name,
+               
                 IsActive = s.IsActive
             }).FirstOrDefault(x => x.Email == email);
         }

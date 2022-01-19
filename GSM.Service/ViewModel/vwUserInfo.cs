@@ -24,6 +24,10 @@ namespace GSM.Service.ViewModel
         [Display(Name = "Registration")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime CreatedDate { get; set; }
+
+        public int? Days { get; set; }
+        [Display(Name= "Subcription Laft Days")]
+        public DateTime EndDate { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
 

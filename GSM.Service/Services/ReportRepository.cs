@@ -14,8 +14,6 @@ namespace GSM.Service.Services
     {
         List<int> AdminDashboradCount();
         IEnumerable<vwUserInfo> UserDetail();
-
-       // List<string> AutoCompleteUser(string text);
     }
     public class ReportService : IReportService
     {
@@ -27,14 +25,15 @@ namespace GSM.Service.Services
         }
         public List<int> AdminDashboradCount()
         {
-            var arlist1 = new List<int>
+            var data = _context.MstUser.ToList();
+            var countList = new List<int>
             {
-                _context.MstUser.Where(x=>x.IsActive==true).Count(),
-                _context.MstUser.Where(x => x.CreatedDate.Equals(DateTime.Now)).Count(),
-                _context.MstUser.Where(x => x.CreatedDate >= DateTime.Now.AddMonths(-1)).Count(),
+                data.Where(x=>x.IsActive==true).Count(),
+                data.Where(x => x.CreatedDate.Equals(DateTime.Now)).Count(),
+                data.Where(x => x.CreatedDate >= DateTime.Now.AddMonths(-1)).Count(),
                 _context.MstTrainner.Count()
             };
-            return arlist1;
+            return countList;
         }
 
         public IEnumerable<vwUserInfo> UserDetail()
@@ -66,6 +65,3 @@ namespace GSM.Service.Services
 
     }
 }
-/*
- Html.DropDownList("country", ViewData["countries"] as SelectList) 
- * **/

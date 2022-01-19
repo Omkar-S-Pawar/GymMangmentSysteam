@@ -1,6 +1,7 @@
 ﻿using GSM.DAL.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace GSM.Service.Services
@@ -15,6 +16,7 @@ namespace GSM.Service.Services
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        public ClaimsPrincipal User { get; private set; }
 
         public AccountService(UserManager<IdentityUser> userManager, 
                               SignInManager<IdentityUser> signInManager)
@@ -38,6 +40,7 @@ namespace GSM.Service.Services
             return await _signInManager.PasswordSignInAsync(userModel.Email, userModel.Password, false, false);
         }
       
+
         public async Task SignOutAsync()
         {
             await _signInManager.SignOutAsync();
