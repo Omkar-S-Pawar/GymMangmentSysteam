@@ -83,18 +83,7 @@ namespace GSM.Service.Services
 
         public vwUserInfo GetByUserName(string email)
         {
-            return _context.MstUser.Select(s => new vwUserInfo
-            {
-                Id = s.Id,
-                Name = s.Name,
-                Email = s.Email,
-                Phone = s.Phone,
-                Gender = s.Gender,
-                Age = s.Age,
-                TrainnerName = s.Traniner.Name,
-                PlanName = s.Plan.Name,
-                IsActive = s.IsActive
-            }).FirstOrDefault(x => x.Email == email);
+             return GetUserInfoAll().FirstOrDefault(x => x.Email == email);
         }
 
         public vwUserInfo GetById(int id)
