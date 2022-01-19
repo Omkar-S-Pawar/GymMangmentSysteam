@@ -2,10 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.ComponentModel.DataAnnotations.Schema;
 namespace GSM.Service.ViewModel
 {
     public class vwUserInfo
@@ -20,14 +17,22 @@ namespace GSM.Service.ViewModel
         [Display(Name = "Trainner")]
         public string TrainnerName { get; set; }
         [Display(Name = "Subcription")]
+        public int PlanId { get; set; }
         public string PlanName { get; set; }
         public bool? IsActive { get; set; }
 
         [Display(Name = "Registration")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime CreatedDate { get; set; }
-        public virtual Traniner Traniner {get;set;}
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
 
-        public IList<User> Users { get; set; }
+        [ForeignKey("TrainnerId")]
+        public virtual Traniner Traniner {get;set;}
+        public virtual Plan Plan {get;set;}
+
+
+        public List<User> Users { get; set; }
+        public List<Traniner> Traniners { get; set; }
     }
 }

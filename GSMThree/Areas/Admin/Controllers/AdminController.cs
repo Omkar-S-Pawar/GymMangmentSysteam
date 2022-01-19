@@ -3,9 +3,7 @@ using GSM.Service.Services;
 using GSM.Service.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,31 +35,40 @@ namespace GMS.Areas.Admin.Controllers
         }
 
         [Route("UserDetails")]
-        public IActionResult UserDetails(vwUserInfo userModel)
+        public IActionResult UserDetails(string name,string email,string txtFromDate, string txttoDate,int Gender,int IsActive,int ddlTraniners)
         {
-            DateTime fromDate = userModel.CreatedDate;
-            DateTime toDate = userModel.CreatedDate;
-            var aa = Request.Form["Gender"].ToString();
-            var aa1 = Request.Form["Email"].ToString();
-            var aa22 = Request.Form["txtFromDate"].ToString();
-            var aa33 = Request.Form["txtToDate"].ToString();
-            var aa44 = Request.Form["ddlTraniners"].ToString();
             List<vwUserInfo> result = _userService.GetUserInfoAll().ToList();
 
-            if(userModel.Name!=null && userModel.Email == "" && fromDate == null && toDate ==null && userModel.Gender == 0 && userModel.IsActive == null && userModel.TrainnerId==0 )
+            if(name!=null)
             {
-                
+                result = result.Where(s => s.Name.ToLower().Contains(name.ToLower())).ToList();
+            }
+            if (email != null)
+            {
+                result = result.Where(s => s.Email.Contains(email)).ToList();
+            }
+            if (txtFromDate != null && txttoDate!=null)
+            {
+                result = result.Where(s => s.CreatedDate >= Convert.ToDateTime(txtFromDate) && s.CreatedDate <= Convert.ToDateTime(txttoDate)).ToList();
+            }
+            if (Gender != 0)
+            {
+                result = result.Where(s => s.Gender.Equals(Gender)).ToList();
+            }
+            if (IsActive != 0)
+            {
+                result = result.Where(s => s.Gender.Equals(IsActive)).ToList();
+            }   
+            if (ddlTraniners != 0)
+            {
+                result = result.Where(s => s.Gender.Equals(ddlTraniners)).ToList();
             }
 
-            var a = Request.Form["Name"];
             return View(result);
         }
 
-        //[HttpPost]
-        //[Route("Search")]
-        //public IActionResult Search(vwUserInfo userModel)
-        //{
-         
-        //}
+
+
+
     }
 }

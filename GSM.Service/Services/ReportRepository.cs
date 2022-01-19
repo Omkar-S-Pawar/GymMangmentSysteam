@@ -13,6 +13,7 @@ namespace GSM.Service.Services
     public interface IReportService : IDisposable
     {
         List<int> AdminDashboradCount();
+        IEnumerable<vwUserInfo> UserDetail();
 
        // List<string> AutoCompleteUser(string text);
     }
@@ -30,21 +31,31 @@ namespace GSM.Service.Services
             {
                 _context.MstUser.Where(x=>x.IsActive==true).Count(),
                 _context.MstUser.Where(x => x.CreatedDate.Equals(DateTime.Now)).Count(),
-                _context.MstUser.Where(x => x.CreatedDate <= DateTime.Now).Count(),
+                _context.MstUser.Where(x => x.CreatedDate >= DateTime.Now.AddMonths(-1)).Count(),
                 _context.MstTrainner.Count()
             };
             return arlist1;
         }
 
-        public IEnumerable<vwReport> UserDetail()
+        public IEnumerable<vwUserInfo> UserDetail()
         {
-            var data = from u in _context.MstUser
-                       select new vwReport
-                       {
-                           // User=u
-                       };
-
-            return data.ToList();
+            var vwUser = (from mu in _context.MstUser
+                                orderby mu.CreatedDate descending
+                                select new vwUserInfo
+                                {
+                                    Id=mu.Id,
+                                    Name=mu.Name,
+                                    Email=mu.Email,
+                                    Phone=mu.Phone,
+                                    TrainnerId=mu.TrainnerId,
+                                    TrainnerName=mu.Traniner.Name,
+                                    PlanId=mu.PlanId,
+                                    Gender=mu.Gender,
+                                    IsActive=mu.IsActive,
+                                    
+                                }).ToList();
+           
+            return vwUser;
         }
        
         public void Dispose()
@@ -55,3 +66,6 @@ namespace GSM.Service.Services
 
     }
 }
+/*
+ Html.DropDownList("country", ViewData["countries"] as SelectList) 
+ * **/
