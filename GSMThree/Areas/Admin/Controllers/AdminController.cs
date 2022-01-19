@@ -13,12 +13,10 @@ namespace GMS.Areas.Admin.Controllers
     public class AdminController : Controller
     {
         private readonly IReportService _reportService;
-        private readonly IUserService _userService;
 
-        public AdminController(IReportService reportService, IUserService userService)
+        public AdminController(IReportService reportService)
         {
             _reportService = reportService;
-            _userService = userService;
         }
 
         [HttpGet]
@@ -26,13 +24,6 @@ namespace GMS.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View(_reportService.AdminDashboradCount());
-        }
-
-        [Route("UserDetails")]
-        public IActionResult UserDetails(string name, string email, string txtFromDate, string txttoDate, int Gender, int IsActive, int ddlTraniners)
-        {
-            List<vwUserInfo> result = _userService.GetUsersForAdminReport(name, email, txtFromDate, txttoDate, Gender, IsActive, ddlTraniners).ToList();
-            return View(result);
         }
     }
 }

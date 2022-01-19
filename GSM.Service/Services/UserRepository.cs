@@ -10,7 +10,7 @@ namespace GSM.Service.Services
     public interface IUserService : IDisposable
     {
         public IEnumerable<vwUserInfo> GetUserInfoAll();
-        public IEnumerable<vwUserInfo> GetUsersForAdminReport(string name, string email, string txtFromDate, string txttoDate, int Gender, int IsActive, int ddlTraniners);
+        public IEnumerable<vwUserInfo> GetUsersForAdminReport(string name, string email, string txtFromDate, string txttoDate, int Gender, int IsActive);
         public IEnumerable<vwUserInfo> GetUserById(int id);
         public vwUserInfo GetById(int id);
         public vwUserInfo GetByUserName(string email);
@@ -141,7 +141,7 @@ namespace GSM.Service.Services
                 Name = s.Name
             });
         }
-        public IEnumerable<vwUserInfo> GetUsersForAdminReport(string name, string email, string txtFromDate, string txttoDate, int Gender, int IsActive, int ddlTraniners)
+        public IEnumerable<vwUserInfo> GetUsersForAdminReport(string name, string email, string txtFromDate, string txttoDate, int Gender, int IsActive)
         {
             List<vwUserInfo> result = GetUserInfoAll().ToList();
 
@@ -165,10 +165,7 @@ namespace GSM.Service.Services
             {
                 result = result.Where(s => s.Gender.Equals(IsActive)).ToList();
             }
-            if (ddlTraniners != 0)
-            {
-                result = result.Where(s => s.Gender.Equals(ddlTraniners)).ToList();
-            }
+
             return result;
         }
 
