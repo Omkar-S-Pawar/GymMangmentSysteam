@@ -59,16 +59,16 @@ namespace GMS.Controllers
 
             if (result.Succeeded)
             {
-            
-                if (userModel.Email=="osp@gmail.com")
+                //For Admin Role
+                if (userModel.Email == "osp@gmail.com")
                 {
-                    return RedirectToAction("Index","Admin",new {Areas="Admin"});
+                    return RedirectToAction("Index", "Admin", new { Areas = "Admin" });
                 }
                 else
                 {
                     return Redirect("~/Member/Home/Index");
                 }
-               
+
             }
 
             ModelState.AddModelError("", "Invalid Creditials");
@@ -79,7 +79,7 @@ namespace GMS.Controllers
         public async Task<IActionResult> Logout()
         {
             await _accountService.SignOutAsync();
-            return RedirectToAction("Default", "Home"); 
+            return RedirectToAction("Default", "Home");
         }
     }
 }

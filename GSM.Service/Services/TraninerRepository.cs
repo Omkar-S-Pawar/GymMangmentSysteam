@@ -1,25 +1,19 @@
 ﻿using GSM.DAL.Data;
 using GSM.DAL.Models;
 using GSM.Service.ViewModel;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GSM.Service.Services
 {
-    public interface ITraniner :IDisposable
+    public interface ITraniner : IDisposable
     {
         public IEnumerable<vwTraninerInfo> GetTraninerInfoAll();
-        public IEnumerable<vwTraninerInfo> GetTraninerById(int id);
         public vwTraninerInfo GetById(int id);
         public void Add(Traniner entity);
-        public string GetTraninerName(int? id);
         public void UpdateTraniner(Traniner traniner);
         public void DeleteById(int id);
-        public IEnumerable<vwUserInfo> GetUserByTranninerId(int TraninerId);
     }
     public class TraninerService : ITraniner
     {
@@ -29,9 +23,14 @@ namespace GSM.Service.Services
         {
             _context = Context;
         }
-     
+
         public void Add(Traniner entity)
         {
+            entity.CreatedBy = "Admin";
+            entity.CreatedDate = DateTime.UtcNow;
+            entity.UpdateDate = entity.CreatedDate;
+            entity.UpdatedBy = entity.CreatedBy;
+
             _context.Add(entity);
             _context.SaveChanges();
         }
@@ -49,20 +48,9 @@ namespace GSM.Service.Services
             {
                 Id = s.Id,
                 Name = s.Name,
-                Gender=s.Gender,
-                IsActive = s.IsActive
-            }).FirstOrDefault(x => x.Id == id);
-        }
-
-        public IEnumerable<vwTraninerInfo> GetTraninerById(int id)
-        {
-            return _context.MstTrainner.Select(s => new vwTraninerInfo
-            {
-                Id = s.Id,
-                Name = s.Name,
                 Gender = s.Gender,
                 IsActive = s.IsActive
-            });
+            }).FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<vwTraninerInfo> GetTraninerInfoAll()
@@ -72,34 +60,9 @@ namespace GSM.Service.Services
                 Id = s.Id,
                 Name = s.Name,
                 Gender = s.Gender,
-                CreateAt=s.CreatedDate,
+                CreateAt = s.CreatedDate,
                 IsActive = s.IsActive
             }).ToList();
-        }
-
-        public string GetUserNameById(int id)
-        {
-            return _context.MstUser.Find(id).Name;
-        }
-
-        public IEnumerable<vwUserInfo> GetUserByTranninerId(int TraninerId)
-        {
-            return _context.MstUser.Where(x => x.TrainnerId == TraninerId)
-                .Select(s => new vwUserInfo
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    Email = s.Email,
-                    Phone = s.Phone,
-                    Gender = s.Gender,
-                    Age = s.Age,
-                    TrainnerName =GetTraninerName(s.TrainnerId),
-                    IsActive = s.IsActive
-                });
-        }
-        public string GetTraninerName(int? id)
-        {
-           return _context.MstTrainner.Where(x => x.Id == id).FirstOrDefault().Name;
         }
 
         public void UpdateTraniner(Traniner traniner)

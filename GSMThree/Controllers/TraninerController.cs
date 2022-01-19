@@ -39,11 +39,6 @@ namespace GMS.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    traniner.CreatedBy = "Admin";
-                    traniner.CreatedDate = DateTime.UtcNow;
-                    traniner.UpdateDate = traniner.CreatedDate;
-                    traniner.UpdatedBy = traniner.CreatedBy;
-
                     _traniner.Add(traniner);
 
                     return RedirectToAction("Index");

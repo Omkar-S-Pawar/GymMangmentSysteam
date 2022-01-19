@@ -16,7 +16,8 @@ namespace GSMThree.Controllers
 
         public IActionResult Index()
         {
-            return Content("Only For Admin");
+            ModelState.AddModelError("", "Only For Admin");
+            return View();
         }
 
         public IActionResult Default()

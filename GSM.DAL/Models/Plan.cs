@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GSM.DAL.Models
 {
@@ -19,11 +16,12 @@ namespace GSM.DAL.Models
         [Required]
         public bool IsActive { get; set; }
         [Required]
+        [Display(Name = "Created Date", Prompt = "Enter Date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime CreatedDate { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? UpdateDate { get; set; }
-         public string CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
         public string UpdateBy { get; set; }
 
         // One to Many

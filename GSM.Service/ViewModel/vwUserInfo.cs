@@ -1,6 +1,5 @@
 ﻿using GSM.DAL.Models;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace GSM.Service.ViewModel
@@ -25,18 +24,8 @@ namespace GSM.Service.ViewModel
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime CreatedDate { get; set; }
 
-        public int? Days { get; set; }
-        [Display(Name= "Subcription Laft Days")]
-        public DateTime EndDate { get; set; }
-        public DateTime FromDate { get; set; }
-        public DateTime ToDate { get; set; }
-
         [ForeignKey("TrainnerId")]
-        public virtual Traniner Traniner {get;set;}
-        public virtual Plan Plan {get;set;}
-
-
-        public List<User> Users { get; set; }
-        public List<Traniner> Traniners { get; set; }
+        public virtual Traniner Traniner { get; set; }
+        public virtual Plan Plan { get; set; }
     }
 }

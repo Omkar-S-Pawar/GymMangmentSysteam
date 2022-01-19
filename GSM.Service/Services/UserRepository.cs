@@ -10,7 +10,7 @@ namespace GSM.Service.Services
     public interface IUserService : IDisposable
     {
         public IEnumerable<vwUserInfo> GetUserInfoAll();
-        public IEnumerable<vwUserInfo> GetUserForAdminReport(string name, string email, string txtFromDate, string txttoDate, int Gender, int IsActive, int ddlTraniners);
+        public IEnumerable<vwUserInfo> GetUsersForAdminReport(string name, string email, string txtFromDate, string txttoDate, int Gender, int IsActive, int ddlTraniners);
         public IEnumerable<vwUserInfo> GetUserById(int id);
         public vwUserInfo GetById(int id);
         public vwUserInfo GetByUserName(string email);
@@ -40,13 +40,17 @@ namespace GSM.Service.Services
                 Gender = s.Gender,
                 Age = s.Age,
                 TrainnerName = s.Traniner.Name,
-                PlanName =s.Plan.Name,
+                PlanName = s.Plan.Name,
                 CreatedDate = (DateTime)s.CreatedDate
             }).ToList();
         }
 
         public void Add(User entity)
         {
+            entity.CreatedBy = "Admin";
+            entity.CreatedDate = DateTime.UtcNow;
+            entity.UpdateDate = entity.CreatedDate;
+            entity.UpdatedBy = entity.CreatedBy;
             _context.Add(entity);
             _context.SaveChanges();
         }
@@ -88,7 +92,7 @@ namespace GSM.Service.Services
                 Gender = s.Gender,
                 Age = s.Age,
                 TrainnerName = s.Traniner.Name,
-                PlanName = s.Plan.Name,               
+                PlanName = s.Plan.Name,
                 IsActive = s.IsActive
             }).FirstOrDefault(x => x.Email == email);
         }
@@ -117,7 +121,7 @@ namespace GSM.Service.Services
                 Phone = s.Phone,
                 Gender = s.Gender,
                 Age = s.Age,
-                TrainnerName =s.Traniner.Name,
+                TrainnerName = s.Traniner.Name,
                 IsActive = s.IsActive
             });
         }
@@ -137,7 +141,7 @@ namespace GSM.Service.Services
                 Name = s.Name
             });
         }
-        public IEnumerable<vwUserInfo> GetUserForAdminReport(string name, string email, string txtFromDate, string txttoDate, int Gender, int IsActive, int ddlTraniners)
+        public IEnumerable<vwUserInfo> GetUsersForAdminReport(string name, string email, string txtFromDate, string txttoDate, int Gender, int IsActive, int ddlTraniners)
         {
             List<vwUserInfo> result = GetUserInfoAll().ToList();
 

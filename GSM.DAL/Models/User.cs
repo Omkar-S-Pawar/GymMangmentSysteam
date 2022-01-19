@@ -26,14 +26,15 @@ namespace GSM.DAL.Models
         [RegularExpression(@"^([0]|\+91[\-\s]?)?[789]\d{9}$", ErrorMessage = "Entered Mobile No is not valid.")]
         public string Phone { get; set; }
         [Display(Name = "Age", Prompt = " Enter Age")]
-        [RegularExpression("^(0?[1-9]|[1-9][0-9]|[1][1-9][1-9]|100)$", ErrorMessage = "Age must bebetween 0 and 100, without decimal place")]
+        [RegularExpression("^(^[14-99]{2}$)$", ErrorMessage = "Age must bebetween 14 and 100")]
         public int Age { get; set; }
+
         [Display(Name = "Gender", Prompt = " Enter Gender")]
-        public int? Gender { get; set; }
+        public int? Gender { get; set; } = 0;
         public int? Role { get; set; }
         [Display(Name = "Is Active", Prompt = "Is Active ?")]
         public bool? IsActive { get; set; }
-        [Display(Name = "Created Date", Prompt = " Enter Date")]
+        [Display(Name = "Created Date", Prompt = "Enter Date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? CreatedDate { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
@@ -50,7 +51,6 @@ namespace GSM.DAL.Models
      
         [ForeignKey("TrainnerId")]
         public virtual Traniner Traniner { get; set; }
-
 
         // Many To Many
         public IList<UserWorkoutDay> UserWorkoutDays { get; set; }

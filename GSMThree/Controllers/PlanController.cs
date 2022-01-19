@@ -97,7 +97,7 @@ namespace GMS.Controllers
                     return BadRequest();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("Update");
             }

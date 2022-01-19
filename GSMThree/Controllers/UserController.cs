@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace GSMThree.Controllers
 {
@@ -14,11 +13,9 @@ namespace GSMThree.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        private readonly IWorkoutService _workoutService;
-        public UserController(IUserService userService, IWorkoutService workoutService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _workoutService = workoutService;
         }
 
         //Display List 
@@ -26,7 +23,6 @@ namespace GSMThree.Controllers
         {
 
             List<vwUserInfo> result = _userService.GetUserInfoAll().ToList();
-
 
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
@@ -55,18 +51,13 @@ namespace GSMThree.Controllers
         {
             List<vwTraninerInfo> vwTraniners = _userService.GetddlTraniner().ToList();
             ViewBag.TraninersList = vwTraniners;
-           
+
             List<vwPlan> vwPlan = _userService.GetddlPlan().ToList();
             ViewBag.PlanList = vwPlan;
-            
+
             return View();
         }
 
-
-        public ActionResult RenderMenu()
-        {
-            return PartialView("_WorkoutDay");
-        }
         //Data Save 
         [HttpPost]
         [Route("Create")]
@@ -76,11 +67,6 @@ namespace GSMThree.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    user.CreatedBy = "Admin";
-                    user.CreatedDate = DateTime.UtcNow;
-                    user.UpdateDate = user.CreatedDate;
-                    user.UpdatedBy = user.CreatedBy;
-
                     _userService.Add(user);
 
                     return RedirectToAction("Index");
@@ -135,7 +121,7 @@ namespace GSMThree.Controllers
                     return BadRequest();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("Update");
             }
