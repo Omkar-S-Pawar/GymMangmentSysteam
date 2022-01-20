@@ -1,5 +1,3 @@
-using System;
-
 namespace GSMThree.Models
 {
     public class ErrorViewModel

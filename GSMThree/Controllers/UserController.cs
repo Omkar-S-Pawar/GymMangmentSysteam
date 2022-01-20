@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GSMThree.Controllers
 {
@@ -13,9 +14,11 @@ namespace GSMThree.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly IAccountService _accountService;
+        public UserController(IUserService userService, IAccountService accountService)
         {
             _userService = userService;
+            _accountService = accountService;
         }
 
         //Display List 
@@ -61,13 +64,13 @@ namespace GSMThree.Controllers
         //Data Save 
         [HttpPost]
         [Route("Create")]
-        public IActionResult Create([Bind("Id,Email,Password,Name,Phone,Age,Gender,IsActive,TrainnerId,PlanId")] User user)
+        public async Task<IActionResult> Create(vwUserInfo userModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _userService.Add(user);
+                    var r = await _accountService.CreateUser(userModel);
 
                     return RedirectToAction("Index");
                 }
@@ -85,7 +88,7 @@ namespace GSMThree.Controllers
         // Display Value For Update
         [HttpGet]
         [Route("Update")]
-        public IActionResult Update(int id)
+        public IActionResult Update(string id)
         {
             if (id == null)
             {
@@ -107,12 +110,13 @@ namespace GSMThree.Controllers
 
         [HttpPost]
         [Route("Update")]
-        public IActionResult Update([Bind("Id,Email,Name,Phone,Age,Gender,IsActive,TrainnerId")] User user)
+        public IActionResult Update([Bind("Id,Email,Name,Age,Gender,IsActive,TrainnerId")] User user)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    user.PhoneNumber = Request.Form["Phone"];
                     _userService.UpdateUser(user);
                     return RedirectToAction("Index");
                 }
@@ -138,15 +142,9 @@ namespace GSMThree.Controllers
         //Created Details
         [HttpGet]
         [Route("Details")]
-        public IActionResult Details(int Id)
+        public IActionResult Details(string Id)
         {
             return View(_userService.GetById(Id));
-        }
-        [HttpGet]
-        public ActionResult Detail(string customerId)
-        {
-            int id = Convert.ToInt32(customerId);
-            return PartialView("Details", _userService.GetUserById(id));
         }
 
         [HttpGet]

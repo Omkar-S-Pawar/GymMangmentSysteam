@@ -6,10 +6,12 @@ namespace GSM.Service.ViewModel
 {
     public class vwUserInfo
     {
-        public int Id { get; set; }
+        [Display(Name = "Id")]
+        public string UserId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string Password { get; set; }
         public int Age { get; set; }
         public int? Gender { get; set; }
         public int TrainnerId { get; set; }

@@ -11,10 +11,9 @@ namespace GSM.Service.Services
     {
         public IEnumerable<vwUserInfo> GetUserInfoAll();
         public IEnumerable<vwUserInfo> GetUsersForAdminReport(string name, string email, string txtFromDate, string txttoDate, int Gender, int IsActive);
-        public IEnumerable<vwUserInfo> GetUserById(int id);
-        public vwUserInfo GetById(int id);
+        public IEnumerable<vwUserInfo> GetUserById(string id);
+        public vwUserInfo GetById(string id);
         public vwUserInfo GetByUserName(string email);
-        public void Add(User entity);
         public void UpdateUser(User user);
         public void DeleteUserById(int id);
         public IEnumerable<vwTraninerInfo> GetddlTraniner();
@@ -23,7 +22,6 @@ namespace GSM.Service.Services
     public class UserService : IUserService
     {
         private readonly GMSContext _context;
-
         public UserService(GMSContext DBContext)
         {
             _context = DBContext;
@@ -33,36 +31,26 @@ namespace GSM.Service.Services
         {
             return _context.MstUser.Select(s => new vwUserInfo
             {
-                Id = s.Id,
+                UserId = s.Id,
                 Name = s.Name,
                 Email = s.Email,
-                Phone = s.Phone,
+                Phone = s.PhoneNumber,
                 Gender = s.Gender,
                 Age = s.Age,
                 TrainnerName = s.Traniner.Name,
                 PlanName = s.Plan.Name,
-                CreatedDate = (DateTime)s.CreatedDate
+                CreatedDate = s.CreatedDate
             }).ToList();
-        }
-
-        public void Add(User entity)
-        {
-            entity.CreatedBy = "Admin";
-            entity.CreatedDate = DateTime.UtcNow;
-            entity.UpdateDate = entity.CreatedDate;
-            entity.UpdatedBy = entity.CreatedBy;
-            _context.Add(entity);
-            _context.SaveChanges();
         }
 
         public void UpdateUser(User user)
         {
-            var originalData = _context.MstUser.Where(w => w.Id == user.Id).FirstOrDefault();
+            var originalData = _context.MstUser.Where(w => w.Email == user.Email).FirstOrDefault();
             if (originalData != null)
             {
                 originalData.Name = user.Name;
                 originalData.Email = user.Email;
-                originalData.Phone = user.Phone;
+                originalData.PhoneNumber = user.PhoneNumber;
                 originalData.Age = user.Age;
                 originalData.Gender = user.Gender;
                 originalData.IsActive = user.IsActive;
@@ -83,33 +71,24 @@ namespace GSM.Service.Services
 
         public vwUserInfo GetByUserName(string email)
         {
-             return GetUserInfoAll().FirstOrDefault(x => x.Email == email);
+            return GetUserInfoAll().FirstOrDefault(x => x.Email == email);
         }
 
-        public vwUserInfo GetById(int id)
+        public vwUserInfo GetById(string id)
         {
-            return _context.MstUser.Select(s => new vwUserInfo
-            {
-                Id = s.Id,
-                Name = s.Name,
-                Email = s.Email,
-                Phone = s.Phone,
-                Gender = s.Gender,
-                Age = s.Age,
-                TrainnerName = s.Traniner.Name,
-                IsActive = s.IsActive
-            }).FirstOrDefault(x => x.Id == id);
+            return GetUserById(id).FirstOrDefault(x => x.UserId == id);
         }
-        public IEnumerable<vwUserInfo> GetUserById(int id)
+        public IEnumerable<vwUserInfo> GetUserById(string id)
         {
             return _context.MstUser.Where(x => x.Id == id).Select(s => new vwUserInfo
             {
-                Id = s.Id,
+                UserId = s.Id,
                 Name = s.Name,
                 Email = s.Email,
-                Phone = s.Phone,
+                Phone = s.PhoneNumber,
                 Gender = s.Gender,
                 Age = s.Age,
+                TrainnerId = s.TrainnerId,
                 TrainnerName = s.Traniner.Name,
                 IsActive = s.IsActive
             });
@@ -163,6 +142,5 @@ namespace GSM.Service.Services
             _context.Dispose();
             GC.SuppressFinalize(this);
         }
-
     }
 }

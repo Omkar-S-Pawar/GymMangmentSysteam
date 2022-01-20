@@ -25,5 +25,5 @@ namespace GMS.Areas.Report.Controllers
             List<vwUserInfo> result = _userService.GetUsersForAdminReport(name, email, txtFromDate, txttoDate, Gender, IsActive).ToList();
             return View(result);
         }
-    }        
+    }
 }

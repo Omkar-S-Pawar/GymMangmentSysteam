@@ -1,9 +1,6 @@
 ﻿using GSM.Service.Services;
-using GSM.Service.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace GMS.Areas.Admin.Controllers
 {

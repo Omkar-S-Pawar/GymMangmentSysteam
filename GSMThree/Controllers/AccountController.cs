@@ -1,5 +1,4 @@
-﻿using GSM.DAL.Models;
-using GSM.Service.Services;
+﻿using GSM.Service.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -25,17 +24,17 @@ namespace GMS.Controllers
 
         [Route("signup")]
         [HttpPost]
-        public async Task<IActionResult> Signup([Bind("Name,Email,Password")] User userModel)
+        public async Task<IActionResult> Signup([Bind("Name,Email,Password")] InputModel inputModel)
         {
 
-            var result = await _accountService.CreateUser(userModel);
+            var result = await _accountService.CreateUser(inputModel);
             if (!result.Succeeded)
             {
                 foreach (var errormsg in result.Errors)
                 {
                     ModelState.AddModelError("", errormsg.Description);
                 }
-                return View(userModel);
+                return View(inputModel);
             }
             ModelState.Clear();
 
@@ -53,15 +52,17 @@ namespace GMS.Controllers
         [AllowAnonymous]
         [Route("Login")]
         [HttpPost]
-        public async Task<IActionResult> Login(User userModel)
+        public async Task<IActionResult> Login(InputModel inputModel)
         {
-            var result = await _accountService.PasswordSignInAsyc(userModel);
+            var result = await _accountService.PasswordSignInAsyc(inputModel);
 
             if (result.Succeeded)
             {
+                TempData["Email"] = inputModel.Email;
                 //For Admin Role
-                if (userModel.Email == "osp@gmail.com")
+                if (inputModel.Email == "omkar@gmail.com")
                 {
+
                     return RedirectToAction("Index", "Admin", new { Areas = "Admin" });
                 }
                 else

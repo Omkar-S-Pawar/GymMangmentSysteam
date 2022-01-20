@@ -4,12 +4,10 @@ using GSM.Service.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GSM.Service.Services
 {
-    public interface IPlanService :IDisposable
+    public interface IPlanService : IDisposable
     {
         public IEnumerable<vwPlan> GetPlanInfoAll();
         public IEnumerable<vwPlan> GetPlanById(int id);
@@ -44,7 +42,7 @@ namespace GSM.Service.Services
             {
                 Id = s.Id,
                 Name = s.Name,
-                CreatedDate=s.CreatedDate,
+                CreatedDate = s.CreatedDate,
                 IsActive = s.IsActive
             }).FirstOrDefault(x => x.Id == id);
         }
@@ -66,7 +64,7 @@ namespace GSM.Service.Services
             {
                 Id = s.Id,
                 Name = s.Name,
-                IsActive=s.IsActive,
+                IsActive = s.IsActive,
                 CreatedDate = s.CreatedDate
             }).ToList();
         }

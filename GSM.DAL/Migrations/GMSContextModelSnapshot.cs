@@ -84,68 +84,6 @@ namespace GSM.DAL.Migrations
                     b.ToTable("MstTrainner");
                 });
 
-            modelBuilder.Entity("GSM.DAL.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PlanId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Role")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TrainnerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlanId");
-
-                    b.HasIndex("TrainnerId");
-
-                    b.ToTable("MstUser");
-                });
-
             modelBuilder.Entity("GSM.DAL.Models.UserWorkoutDay", b =>
                 {
                     b.Property<int>("UserId")
@@ -169,13 +107,18 @@ namespace GSM.DAL.Migrations
                     b.Property<string>("UpdateBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdateDate")
+                    b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("WorkoutDayId")
                         .HasColumnType("int");
 
                     b.HasKey("UserId", "WorkId");
+
+                    b.HasIndex("UserId1");
 
                     b.HasIndex("WorkoutDayId");
 
@@ -204,7 +147,7 @@ namespace GSM.DAL.Migrations
                     b.Property<string>("UpdateBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdateDate")
+                    b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -275,6 +218,10 @@ namespace GSM.DAL.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -326,6 +273,8 @@ namespace GSM.DAL.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -410,30 +359,55 @@ namespace GSM.DAL.Migrations
 
             modelBuilder.Entity("GSM.DAL.Models.User", b =>
                 {
-                    b.HasOne("GSM.DAL.Models.Plan", "Plan")
-                        .WithMany("Users")
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.HasOne("GSM.DAL.Models.Traniner", "Traniner")
-                        .WithMany()
-                        .HasForeignKey("TrainnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
 
-                    b.Navigation("Plan");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Navigation("Traniner");
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<int>("PlanId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SubcriptionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TrainnerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("PlanId");
+
+                    b.HasIndex("TrainnerId");
+
+                    b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("GSM.DAL.Models.UserWorkoutDay", b =>
                 {
                     b.HasOne("GSM.DAL.Models.User", "User")
                         .WithMany("UserWorkoutDays")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId1");
 
                     b.HasOne("GSM.DAL.Models.WorkoutDay", "WorkoutDay")
                         .WithMany("UserWorkoutDays")
@@ -495,17 +469,36 @@ namespace GSM.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("GSM.DAL.Models.User", b =>
+                {
+                    b.HasOne("GSM.DAL.Models.Plan", "Plan")
+                        .WithMany("Users")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GSM.DAL.Models.Traniner", "Traniner")
+                        .WithMany()
+                        .HasForeignKey("TrainnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Plan");
+
+                    b.Navigation("Traniner");
+                });
+
             modelBuilder.Entity("GSM.DAL.Models.Plan", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("GSM.DAL.Models.User", b =>
+            modelBuilder.Entity("GSM.DAL.Models.WorkoutDay", b =>
                 {
                     b.Navigation("UserWorkoutDays");
                 });
 
-            modelBuilder.Entity("GSM.DAL.Models.WorkoutDay", b =>
+            modelBuilder.Entity("GSM.DAL.Models.User", b =>
                 {
                     b.Navigation("UserWorkoutDays");
                 });

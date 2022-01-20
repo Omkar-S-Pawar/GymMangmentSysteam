@@ -1,4 +1,4 @@
-﻿@model GSM.DAL.Models.User
+﻿@model GSM.Service.ViewModel.vwUserInfo
 @{
     <script>
         function ValidateRadioButton() {
@@ -19,8 +19,7 @@
                  return true;
             }
         }
-    </script>
-  //  Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    </script> 
     ViewData["Title"] = "Create";
 }
 
@@ -52,7 +51,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label asp-for="Password" class="control-label"></label>
+                        <label class="control-label">Password</label>
                         <input type="password" asp-for="Password" class="form-control" required />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
@@ -69,7 +68,7 @@
                         <span asp-validation-for="Age" class="text-danger"></span>
                     </div>
                     <div class="col">
-                        <label asp-for="Gender" class="control-label"></label>  <br />
+                        <label asp-for="Gender" class="control-label mb-2"></label>  <br />
                         @Html.RadioButton("Gender", "1")  Male &nbsp;&nbsp;
                         @Html.RadioButton("Gender", "2")  Female &nbsp;&nbsp;
                         @Html.RadioButton("Gender", "3")  Other

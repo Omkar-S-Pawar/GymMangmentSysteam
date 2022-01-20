@@ -1,9 +1,6 @@
 ﻿using GSM.DAL.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace GSM.DAL.Data
 {
@@ -12,7 +9,7 @@ namespace GSM.DAL.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<UserWorkoutDay>().HasKey(uwd => new { uwd.UserId,uwd.WorkId });
+            modelBuilder.Entity<UserWorkoutDay>().HasKey(uwd => new { uwd.UserId, uwd.WorkId });
         }
 
         public GMSContext(DbContextOptions<GMSContext> options)

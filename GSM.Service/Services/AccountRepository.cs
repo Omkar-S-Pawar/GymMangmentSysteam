@@ -1,6 +1,7 @@
 ﻿using GSM.DAL.Models;
+using GSM.Service.ViewModel;
 using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -8,9 +9,15 @@ namespace GSM.Service.Services
 {
     public interface IAccountService
     {
-        Task<IdentityResult> CreateUser(User userModel);
-        Task<SignInResult> PasswordSignInAsyc(User userModel);
+        Task<IdentityResult> CreateUser(InputModel inputModel);
+        Task<IdentityResult> CreateUser(vwUserInfo viewModelUserInfo);
+        Task<SignInResult> PasswordSignInAsyc(InputModel inputModel);
         Task SignOutAsync();
+    }
+    public class InputModel
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
     public class AccountService : IAccountService
     {
@@ -18,28 +25,52 @@ namespace GSM.Service.Services
         private readonly SignInManager<IdentityUser> _signInManager;
         public ClaimsPrincipal User { get; private set; }
 
-        public AccountService(UserManager<IdentityUser> userManager, 
+        public AccountService(UserManager<IdentityUser> userManager,
                               SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
         }
 
-        public async Task<IdentityResult> CreateUser(User userModel)
+        //For Registration 
+        public async Task<IdentityResult> CreateUser(InputModel inputModel)
         {
             var user = new IdentityUser()
             {
-                Email = userModel.Email,
-                UserName = userModel.Email
+                Email = inputModel.Email,
+                UserName = inputModel.Email
             };
-            return await _userManager.CreateAsync(user, userModel.Password);
+            return await _userManager.CreateAsync(user, inputModel.Password);
         }
 
-        public async Task<SignInResult> PasswordSignInAsyc(User userModel)
+        //For Admin UserCreation
+        public async Task<IdentityResult> CreateUser(vwUserInfo viewModelUserInfo)
         {
-            return await _signInManager.PasswordSignInAsync(userModel.Email, userModel.Password, false, false);
+            var user = new User()
+            {
+                Name = viewModelUserInfo.Name,
+                Email = viewModelUserInfo.Email,
+                UserName = viewModelUserInfo.Email,
+                NormalizedEmail = viewModelUserInfo.Email,
+                PhoneNumber = viewModelUserInfo.Phone,
+                Age = viewModelUserInfo.Age,
+                Gender = viewModelUserInfo.Gender,
+                PlanId = viewModelUserInfo.PlanId,
+                TrainnerId = viewModelUserInfo.TrainnerId,
+                IsActive = viewModelUserInfo.IsActive,
+                SubcriptionDate = DateTime.Now.AddMonths(viewModelUserInfo.PlanId),
+                CreatedDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+                CreatedBy = "Admin",
+                UpdatedBy = "Admin"
+            };
+            return await _userManager.CreateAsync(user, viewModelUserInfo.Password);
         }
-      
+
+        public async Task<SignInResult> PasswordSignInAsyc(InputModel inputModel)
+        {
+            return await _signInManager.PasswordSignInAsync(inputModel.Email, inputModel.Password, false, false);
+        }
 
         public async Task SignOutAsync()
         {

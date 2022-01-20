@@ -56,7 +56,7 @@
                             if (Model.Count() == 0)
                             {
                                 <tr>
-                                    <td colspan="4"> Records not found </td>
+                                    <td colspan="10"> Records not found </td>
                                 </tr>
                             }
                             else
@@ -104,9 +104,9 @@
                                             @Html.DisplayFor(modelItem => item.CreatedDate)
                                         </td>
                                         <td>
-                                            <a asp-action="Update" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a> |
-                                            <a asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-info-circle"></i></a> |
-                                            <a href="@Url.Action("Delete", new { id = item.Id })" style="color :red;" onclick="return confirm ('Are you sure want to delete ?');">
+                                            <a asp-action="Update" asp-route-id="@item.UserId"><i class="bi bi-pencil-square"></i></a> |
+                                            <a asp-action="Details" asp-route-id="@item.UserId"><i class="bi bi-info-circle"></i></a> |
+                                            <a href="@Url.Action("Delete", new { id = item.UserId })" style="color :red;" onclick="return confirm ('Are you sure want to delete ?');">
                                                 <i class="bi bi-x-circle"></i>
                                             </a>
                                         </td>
