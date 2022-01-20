@@ -1,36 +1,50 @@
 ﻿@model GSM.DAL.Models.Plan
-
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h4>Create Subcription Plan</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+<div class="pagetitle">
+    <h1>Subcription Plan</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Admin" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item active">Subcription Plans</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<section class="section contact">
+    <div class="col-xl-12">
+        <div class="card p-4">
+            <form asp-action="Create">
+                <div class="row gy-4">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="col-md-4">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <br />
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                         <br />
+                        <input type="submit" value="Create" class="btn btn-primary" />  &nbsp;
+                        <a asp-area="" asp-controller="Plan" asp-action="Index" class="btn btn-secondary">Back To List</a>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
+    }

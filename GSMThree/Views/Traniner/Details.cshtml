@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Details</h1>
@@ -10,28 +11,47 @@
     <h4>Traniner</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Gender)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Gender)
+        <dd class="col-sm-10">
+            @if (@Model.Gender == 1)
+            {
+                <label>Male</label>
+            }
+            else if (@Model.Gender == 2)
+            {
+                <label>Female</label>
+            }
+            else
+            {
+                <label>Other</label>
+            }
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
+
             @Html.DisplayNameFor(model => model.IsActive)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsActive)
+        <dd class="col-sm-10">
+            @if (@Model.IsActive == true)
+            {
+                <label>Active</label>
+            }
+            else
+            {
+                <label>InActive</label>
+            }
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CreateAt)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CreateAt)
         </dd>
     </dl>

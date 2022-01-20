@@ -1,67 +1,77 @@
 ﻿@model GSM.DAL.Models.Traniner
 
 @{
-    ViewBag.Title = "Validate Or Select Radio Button List In Asp.Net MVC Using JavaScript";
-    <script>
-            function ValidateRadioButton() {
-                var rbtDetail = document.getElementsByName("Gender");
-                var isValid = false;
-                for (var i = 0; i < rbtDetail.length; i++) {
-                    if (rbtDetail[i].checked) {
-                        isValid = true;
-                        break;
-                    }
-                }
-                if (isValid == false) {
-                     alert("Error : Pleae select Gender option");
-                      return false;
-                }
-                else {
-
-                     return true;
+   <script>
+        function ValidateRadioButton() {
+            var rbtDetail = document.getElementsByName("Gender");
+            var isValid = false;
+            for (var i = 0; i < rbtDetail.length; i++) {
+                if (rbtDetail[i].checked) {
+                    isValid = true;
+                    break;
                 }
             }
-    </script>
+            if (isValid == false) {
+                 alert("Error : Pleae select Gender option");
+                  return false;
+            }
+            else {
 
+                 return true;
+            }
+        }
+    </script>
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Create";
 }
 
-<h4>Create Traniner</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <br />
-                <label asp-for="Gender" class="control-label"></label>  <br />
-                @Html.RadioButton("Gender", "1")  Male &nbsp;&nbsp;
-                @Html.RadioButton("Gender", "2")  Female &nbsp;&nbsp;
-                @Html.RadioButton("Gender", "3")  Other
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" onclick="javascript: return ValidateRadioButton();" />
-            </div>
-        </form>
-    </div>
-</div>
+<div class="pagetitle">
+    <h1>Add Traniner</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Admin" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item active">Traniner</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<section class="section contact">
+    <div class="col-xl-12">
+        <div class="card p-4">
+            <form asp-action="Create">
+                <div class="row gy-4">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="col-md-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Gender" class="control-label"></label>  <br />
+                        @Html.RadioButton("Gender", "1")  Male &nbsp;&nbsp;
+                        @Html.RadioButton("Gender", "2")  Female &nbsp;&nbsp;
+                        @Html.RadioButton("Gender", "3")  Other
+                    </div>
+                    <div class="col-md-2">
+                        <br />
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="IsActive" checked="true" /> @Html.DisplayNameFor(model => model.IsActive)
+                        </label>
+                    </div>
+                    <div class="col-md-3">
+                        <br />
+                        <input type="submit" value="Create" class="btn btn-primary" onclick="javascript: return ValidateRadioButton();" />  &nbsp;
+                        <a asp-area="" asp-action="Index" class="btn btn-secondary">Back To List</a>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
-}
+    }

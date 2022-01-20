@@ -107,7 +107,7 @@ namespace GSMThree.Controllers
 
         [HttpPost]
         [Route("Update")]
-        public IActionResult Update(int id, [Bind("Id,Email,Name,Phone,Age,Gender,IsActive,TrainnerId")] User user)
+        public IActionResult Update([Bind("Id,Email,Name,Phone,Age,Gender,IsActive,TrainnerId")] User user)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace GSMThree.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("Update");
+                return View("Index");
             }
         }
 

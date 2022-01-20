@@ -6,7 +6,7 @@ using System;
 
 namespace GMS.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     [Route("Traniner")]
     public class TraninerController : Controller
     {
@@ -76,23 +76,23 @@ namespace GMS.Controllers
 
         [HttpPost]
         [Route("Update")]
-        public IActionResult Update(int id, [Bind("Id,Name,Gender,IsActive")] Traniner traniner)
+        public IActionResult Update([Bind("Id,Name,Gender,IsActive")] Traniner traniner)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     _traniner.UpdateTraniner(traniner);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Traniner");
                 }
                 else
                 {
                     return BadRequest();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return RedirectToAction("Update");
+                return RedirectToAction("Index");
             }
         }
 

@@ -26,7 +26,7 @@ namespace GSM.DAL.Models
         [RegularExpression(@"^([0]|\+91[\-\s]?)?[789]\d{9}$", ErrorMessage = "Entered Mobile No is not valid.")]
         public string Phone { get; set; }
         [Display(Name = "Age", Prompt = " Enter Age")]
-        [RegularExpression("^(^[14-99]{2}$)$", ErrorMessage = "Age must bebetween 14 and 100")]
+        //[RegularExpression("^(^[1-99]{2}$)$", ErrorMessage = "Age must bebetween 1 and 100")]
         public int Age { get; set; }
 
         [Display(Name = "Gender", Prompt = " Enter Gender")]
