@@ -1,4 +1,5 @@
-﻿using GSM.DAL.Models;
+﻿using GSM.DAL.Data;
+using GSM.DAL.Models;
 using GSM.Service.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -9,6 +10,7 @@ namespace GSM.Service.Services
 {
     public interface IAccountService
     {
+        Task<IdentityResult> ChangePasswordAsync(vwChangePassword model, string email);
         Task<IdentityResult> CreateUser(InputModel inputModel);
         Task<IdentityResult> CreateUser(vwUserInfo viewModelUserInfo);
         Task<SignInResult> PasswordSignInAsyc(InputModel inputModel);
@@ -23,10 +25,8 @@ namespace GSM.Service.Services
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        public ClaimsPrincipal User { get; private set; }
-
-        public AccountService(UserManager<IdentityUser> userManager,
-                              SignInManager<IdentityUser> signInManager)
+     
+        public AccountService(UserManager<IdentityUser> userManager,SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -75,6 +75,11 @@ namespace GSM.Service.Services
         public async Task SignOutAsync()
         {
             await _signInManager.SignOutAsync();
+        }
+        public async Task<IdentityResult> ChangePasswordAsync(vwChangePassword model, string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            return await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
         }
     }
 }

@@ -60,17 +60,13 @@
                                     </div>
 
                                     <div class="form-outline mb-4">
-                                        <input type="password" asp-for="Password" class="form-control form-control-lg"  autofocus required />
-                                        <label class="form-label" asp-for="Password" >Your Password</label>
+                                        <input type="password" asp-for="Password" class="form-control form-control-lg" autofocus required />
+                                        <label class="form-label" asp-for="Password">Your Password</label>
                                         <span asp-validation-for="Password" class="text-danger"></span>
                                     </div>
 
                                     <div class="form-check d-flex justify-content-center mb-5">
-                                        <input class="form-check-input me-2"
-                                               type="checkbox"
-                                               required
-                                               value=""
-                                               id="form2Example3cg" />
+                                        <input class="form-check-input me-2" type="checkbox" required  id="form2Example3cg" />
                                         <label class="form-check-label" for="form2Example3g">
                                             I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
                                         </label>
@@ -80,7 +76,7 @@
                                         <input type="submit" value="Register" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" />
                                     </div>
 
-                                    <p class="text-center text-muted mt-5 mb-0">Have already an account? <a asp-controller="Account" asp-action="Login"  class="fw-bold text-body"><u>Login here</u></a></p>
+                                    <p class="text-center text-muted mt-5 mb-0">Have already an account? <a asp-controller="Account" asp-action="Login" class="fw-bold text-body"><u>Login here</u></a></p>
 
                                 </form>
 

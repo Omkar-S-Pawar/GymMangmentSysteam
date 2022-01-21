@@ -34,11 +34,11 @@ namespace GSMThree
             services.AddTransient<ITraniner, TraninerService>();
             services.AddTransient<IPlanService, PlanService>();
             services.AddTransient<IReportService, ReportService>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.Configure<IdentityOptions>(options =>
             {
-                // Default Lockout settings.
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1);
                 options.Lockout.AllowedForNewUsers = true;
             });

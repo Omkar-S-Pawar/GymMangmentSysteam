@@ -15,6 +15,7 @@ namespace GSM.Service.Services
         public vwUserInfo GetById(string id);
         public vwUserInfo GetByUserName(string email);
         public void UpdateUser(User user);
+        public void UpdateUser(vwUserInfo viewUser,string updateBy);
         public void DeleteUserById(int id);
         public IEnumerable<vwTraninerInfo> GetddlTraniner();
         public IEnumerable<vwPlan> GetddlPlan();
@@ -42,7 +43,6 @@ namespace GSM.Service.Services
                 CreatedDate = s.CreatedDate
             }).ToList();
         }
-
         public void UpdateUser(User user)
         {
             var originalData = _context.MstUser.Where(w => w.Email == user.Email).FirstOrDefault();
@@ -61,7 +61,22 @@ namespace GSM.Service.Services
             _context.Update(originalData);
             _context.SaveChanges();
         }
-
+        public void UpdateUser(vwUserInfo viewUser,string updateBy)
+        {
+           
+            var originalData = _context.MstUser.Where(w => w.Email == viewUser.Email).FirstOrDefault();
+           if (originalData != null)
+            {
+                originalData.Name = viewUser.Name;
+                originalData.PhoneNumber = viewUser.Phone;
+                originalData.Age = viewUser.Age;
+                originalData.Gender = viewUser.Gender;
+                originalData.UpdateDate = DateTime.UtcNow;
+                originalData.UpdatedBy = updateBy;
+            };
+            _context.Update(originalData);
+            _context.SaveChanges();
+        }
         public void DeleteUserById(int id)
         {
             var result = _context.MstUser.Find(id);

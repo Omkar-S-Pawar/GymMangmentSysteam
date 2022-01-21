@@ -15,19 +15,22 @@ namespace GSM.Service.ViewModel
         public int Age { get; set; }
         public int? Gender { get; set; }
         public int TrainnerId { get; set; }
-        [Display(Name = "Trainner")]
+        [Display(Name = "Trainner Name")]
         public string TrainnerName { get; set; }
-        [Display(Name = "Subcription")]
         public int PlanId { get; set; }
+        [Display(Name = "Subcription")]
         public string PlanName { get; set; }
         public bool? IsActive { get; set; }
 
         [Display(Name = "Registration")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime CreatedDate { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public string UpdatedBy { get; set; }
 
         [ForeignKey("TrainnerId")]
         public virtual Traniner Traniner { get; set; }
         public virtual Plan Plan { get; set; }
+
     }
 }

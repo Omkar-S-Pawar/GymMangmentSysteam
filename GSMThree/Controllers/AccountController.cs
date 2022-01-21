@@ -1,4 +1,5 @@
 ﻿using GSM.Service.Services;
+using GSM.Service.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -81,6 +82,31 @@ namespace GMS.Controllers
         {
             await _accountService.SignOutAsync();
             return RedirectToAction("Default", "Home");
+        }
+
+        [Authorize]
+        [Route("ChangePassword")]
+        public async Task<IActionResult> ChangePasswordAsync([Bind(Prefix = "Item2")] vwChangePassword vwChangePassword)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _accountService.ChangePasswordAsync(vwChangePassword,TempData["Email"].ToString().ToLower());
+                TempData.Keep("Email");
+                if (result.Succeeded)
+                {
+                    ViewBag.IsSuccess = true;
+                    ModelState.Clear();
+                    await _accountService.SignOutAsync();
+                    return RedirectToAction("Login", "Account");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+            }
+            return Redirect("~/Member/Home/Profile");
         }
     }
 }

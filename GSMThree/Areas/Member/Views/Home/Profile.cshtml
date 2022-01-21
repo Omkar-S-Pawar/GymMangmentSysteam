@@ -1,10 +1,9 @@
-﻿@model GSM.Service.ViewModel.vwUserInfo
-
+﻿@using GSM.Service.ViewModel;
+@model Tuple<vwUserInfo, vwChangePassword>
 @{
     ViewData["Title"] = "Profile";
     Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
 }
-
 
 <div class="pagetitle">
     <h1>Profile</h1>
@@ -24,7 +23,7 @@
                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
                     <img src="~/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                    <h2>@Html.DisplayFor(model => model.Name)</h2>
+                    <h2>@Html.DisplayFor(model => model.Item1.Name)</h2>
                     <h3>User</h3>
                 </div>
             </div>
@@ -59,66 +58,113 @@
 
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 label ">Name</div>
-                                <div class="col-lg-9 col-md-8">@Html.DisplayFor(model => model.Name)</div>
+                                <div class="col-lg-9 col-md-8">@Html.DisplayFor(model => model.Item1.Name)</div>
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-3 col-md-4 label">@Html.DisplayNameFor(model => model.Email)</div>
-                                <div class="col-lg-9 col-md-8">@Html.DisplayFor(model => model.Email)</div>
+                                <div class="col-lg-3 col-md-4 label">@Html.DisplayNameFor(model => model.Item1.Email)</div>
+                                <div class="col-lg-9 col-md-8">@Html.DisplayFor(model => model.Item1.Email)</div>
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-3 col-md-4 label">@Html.DisplayNameFor(model => model.Phone)</div>
-                                <div class="col-lg-9 col-md-8">  @Html.DisplayFor(model => model.Phone)</div>
-                            </div>
-
-                           <div class="row">
-                                <div class="col-lg-3 col-md-4 label">@Html.DisplayNameFor(model => model.TrainnerName)</div>
-                                <div class="col-lg-9 col-md-8">@Html.DisplayFor(model => model.TrainnerName)</div>
+                                <div class="col-lg-3 col-md-4 label">@Html.DisplayNameFor(model => model.Item1.Phone)</div>
+                                <div class="col-lg-9 col-md-8">  @Html.DisplayFor(model => model.Item1.Phone)</div>
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-3 col-md-4 label">@Html.DisplayNameFor(model => model.PlanName)</div>
-                                <div class="col-lg-9 col-md-8">  @Html.DisplayFor(model => model.PlanName)</div>
+                                <div class="col-lg-3 col-md-4 label">@Html.DisplayNameFor(model => model.Item1.TrainnerName)</div>
+                                <div class="col-lg-9 col-md-8">@Html.DisplayFor(model => model.Item1.TrainnerName)</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">@Html.DisplayNameFor(model => model.Item1.PlanName)</div>
+                                <div class="col-lg-9 col-md-8">  @Html.DisplayFor(model => model.Item1.PlanName)</div>
                             </div>
 
 
                         </div>
 
                         <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-                            <h4>User Under Construction</h4> 
+                            <form asp-action="UpdateProfile" asp-area="Member" asp-controller="Home">
+                                <div class="row">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="col">
+                                        <label asp-for="Item1.Email" class="control-label"></label>
+                                        <input asp-for="Item1.Email" class="form-control" readonly />
+                                        <span asp-validation-for="Item1.Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="col">
+                                        <label asp-for="Item1.Name" class="control-label "></label>
+                                        <input asp-for="Item1.Name" class="form-control" required />
+                                        <span asp-validation-for="Item1.Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="col">
+                                        <label asp-for="Item1.Phone" class="control-label"></label>
+                                        <input asp-for="Item1.Phone" class="form-control" required />
+                                        <span asp-validation-for="Item1.Phone" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label asp-for="Item1.Age" class="control-label"></label>
+                                        <input asp-for="Item1.Age" class="form-control" required />
+                                        <span asp-validation-for="Item1.Age" class="text-danger"></span>
+                                    </div>
+                                    <div class="col">
+                                        <label asp-for="Item1.Gender" class="control-label mb-2"></label>  <br />
+                                        @Html.RadioButton("Gender", "1")  Male &nbsp;&nbsp;
+                                        @Html.RadioButton("Gender", "2")  Female &nbsp;&nbsp;
+                                        @Html.RadioButton("Gender", "3")  Other
+                                        <span asp-validation-for="Item1.Gender" class="text-danger"></span>
+                                    </div>
+                                    <div class="col">
+                                        <input type="submit" value="Update Profile" class="btn btn-primary mt-3" onclick="javascript: return ValidateRadioButton();" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                    </div>
+                                </div>
+                                <div class="text-center pt-3">
+                                </div>
+                            </form>
                         </div>
 
                         <div class="tab-pane fade pt-3" id="profile-change-password">
                             <!-- Change Password Form -->
-                            <form>
-
+                            @using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post))
+                            {
                                 <div class="row mb-3">
-                                    <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                    <label asp-for="@Model.Item2.CurrentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="password" type="password" class="form-control" id="currentPassword">
+                                        <input type="password" class="form-control" asp-for="@Model.Item2.CurrentPassword">
+                                        <span asp-validation-for="@Model.Item2.CurrentPassword" class="text-danger"></span>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                                    <label asp-for="@Model.Item2.NewPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                        <input type="password" class="form-control" asp-for="@Model.Item2.NewPassword">
+                                        <span asp-validation-for="@Model.Item2.NewPassword" class="text-danger"></span>
+
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                                    <label asp-for="@Model.Item2.ConfirmNewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                        <input type="password" class="form-control" asp-for="@Model.Item2.ConfirmNewPassword">
+                                        <span asp-validation-for="@Model.Item2.ConfirmNewPassword" class="text-danger"></span>
                                     </div>
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Change Password</button>
+                                    <input type="submit" class="btn btn-primary" value="Change Password" />
                                 </div>
-                            </form><!-- End Change Password Form -->
+                            }
 
+                            <!-- End Change Password Form -->
                         </div>
 
                     </div><!-- End Bordered Tabs -->

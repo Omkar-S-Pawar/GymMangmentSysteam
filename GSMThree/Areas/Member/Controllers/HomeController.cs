@@ -1,6 +1,9 @@
 ﻿using GSM.Service.Services;
+using GSM.Service.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace GMS.Areas.Member.Controllers
 {
@@ -9,24 +12,32 @@ namespace GMS.Areas.Member.Controllers
     public class HomeController : Controller
     {
         private readonly IUserService _userService;
-        public HomeController(IUserService userService)
+        private readonly IAccountService _accountService;
+        public HomeController(IUserService userService,IAccountService accountService)
         {
             _userService = userService;
+            _accountService = accountService;
         }
-
+        //User Dashborad
         public IActionResult Index()
         {
             return View(_userService.GetByUserName(User.Identity.Name));
         }
-
-        public IActionResult Show()
+        //Update User Profile
+        [HttpPost]
+        [Route("UpdateProfile")]
+        public IActionResult UpdateProfile([Bind(Prefix = "Item1")]vwUserInfo vwUserInfo)
         {
-            return View(_userService.GetByUserName(User.Identity.Name));
+            _userService.UpdateUser(vwUserInfo, _userService.GetByUserName(User.Identity.Name).Email);
+            return Redirect("/Views/Shared/UpdateProfile.cshtml");
         }
-
+        //Show Profile and Change Password
+        [HttpGet]
+        [Route("Profile")]
         public IActionResult Profile()
         {
-            return View(_userService.GetByUserName(User.Identity.Name));
+            var tuple = new Tuple<vwUserInfo, vwChangePassword>(_userService.GetByUserName(User.Identity.Name), new vwChangePassword());
+            return View(tuple);
         }
     }
 }
